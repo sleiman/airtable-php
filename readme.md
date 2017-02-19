@@ -70,6 +70,3 @@ print_r($update_contact);
 ## Credits
 
 Copyright (c) 2017 - Programmed by Sleiman Tanios
-
-Released under the [BSD License](LICENSE).
-
