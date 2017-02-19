@@ -9,7 +9,7 @@ Please note that Airtable doesn't allow schema manipulation using their public A
 Once you created your base in the Airtable Interface open the API Docs to get your Base ID.
 
 
-<img src="example/img/api-doc.png" alt="alt text" width="300" height="whatever">
+<img src="example/img/api-doc.png" alt="alt text" height="whatever">
 
 The Base ID is a code that starts with 'app' followed by a mix of letter or numbers (appsvqGDFCwLC3I10).
 
