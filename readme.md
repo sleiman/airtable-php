@@ -9,7 +9,7 @@ Please note that Airtable doesn't allow schema manipulation using their public A
 Once you created your base in the Airtable Interface open the API Docs to get your Base ID.
 
 
-<img src="example/img/api-doc.png" alt="alt text" height="whatever">
+<img src="example/img/api-doc-b.png" alt="API Doc Airtable"  width="400">
 
 The Base ID is a code that starts with 'app' followed by a mix of letter or numbers (appsvqGDFCwLC3I10).
 
@@ -35,13 +35,12 @@ $airtable = new Airtable(array(
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
-// Table nam
 $contacts = $airtable->getContent("Contacts");
 print_r($contacts);
 ```
 
 ### Create new entry
-We will create new entry in the table Contacts.
+We will create new entry in the table Contacts
 ```php
 // Create an array with all the fields you want 
 $new_contact_details = array(
