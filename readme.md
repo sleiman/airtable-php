@@ -4,10 +4,6 @@ A PHP wrapper for the Airtable API. Feedback or bug reports are appreciated.
 
 ## Get started
 
-To use the Airtable API you have to register yourself as a developer at the [Instagram Developer Platform](http://instagr.am/developer/register/) and create an application. Take a look at the [uri guidelines](#samples-for-redirect-urls) before registering a redirect URI. You will receive your `client_id` and `client_secret`.
-
----
-
 Please note that Airtable doesn't allow schema manipulation using their public API, you have to create your tables using their interface.
 
 Once you created your base in the Airtable Interface open the API Docs to get your Base ID.
