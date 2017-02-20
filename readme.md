@@ -9,7 +9,7 @@ Please note that Airtable doesn't allow schema manipulation using their public A
 Once you created your base in the Airtable Interface open the API Docs to get your Base ID.
 
 
-<img src="example/img/api-doc-b.png" alt="API Doc Airtable"  width="400">
+<img src="example/img/api-doc-b.png" alt="API Doc Airtable"  width="350">
 
 The Base ID is a code that starts with 'app' followed by a mix of letter or numbers (appsvqGDFCwLC3I10).
 
@@ -18,7 +18,7 @@ The Base ID is a code that starts with 'app' followed by a mix of letter or numb
 ### Installation
 
 ```
-include('airtable.php');
+include('Airtable.php');
 ```
 
 ### Initialize the class
