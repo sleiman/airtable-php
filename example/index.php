@@ -1,6 +1,6 @@
 <? 
 
-include('../airtable.php');
+include('../Airtable.php');
 
 use TANIOS\Airtable\Airtable;
 
