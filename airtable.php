@@ -87,7 +87,6 @@ class Airtable
 		curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($fields));
 
 		$result = json_decode(curl_exec($curl));
-
 		return $result;
 
 	}
@@ -108,7 +107,6 @@ class Airtable
 		curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($fields));
 
 		$result = json_decode(curl_exec($curl));
-
 		return $result;
 
 	}
