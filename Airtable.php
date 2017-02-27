@@ -49,19 +49,27 @@ class Airtable
         return $this->_base;
     }
 
-    public function getApiUrl($content_type){
-    	$url = self::API_URL.$this->getBase().'/'.$content_type;
+    public function getApiUrl($request){
+    	$url = self::API_URL.$this->getBase().'/'.$request;
     	return $url;
     }
 
-    function getContent($content_type) 
+    function getContent($content_type,$params="") 
     {
 		$headers = array(
 		'Content-Type: application/json',
 		sprintf('Authorization: Bearer %s', $this->getKey())
 		);
 
-		$curl = curl_init($this->getApiUrl($content_type));
+
+		if (!empty($params)){
+			$params = http_build_query($params);
+			$request_url = $content_type."?".$params;
+		} else {
+			$request_url = $content_type;
+		}
+
+		$curl = curl_init($this->getApiUrl($request_url));
 
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -87,6 +95,7 @@ class Airtable
 		curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($fields));
 
 		$result = json_decode(curl_exec($curl));
+
 		return $result;
 
 	}
@@ -107,6 +116,7 @@ class Airtable
 		curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($fields));
 
 		$result = json_decode(curl_exec($curl));
+
 		return $result;
 
 	}
