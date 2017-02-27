@@ -38,7 +38,14 @@ We are getting all the entries from the table "Contacts".
 $contacts = $airtable->getContent("Contacts");
 print_r($contacts);
 ```
-
+### Use params to filter, sort, etc
+```php
+$params =  array(
+		"filterByFormula"=>"AND({Status} = 'New')"
+);
+$contacts = $airtable->getContent("Contacts",$params);
+print_r($contacts);
+```
 ### Create new entry
 We will create new entry in the table Contacts
 ```php

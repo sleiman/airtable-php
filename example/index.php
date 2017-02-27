@@ -9,6 +9,14 @@ $airtable = new Airtable(array(
     'base'   => 'BASE_ID',
 ));
 
+// Get all Deals that have Status = New
+$params =  array(
+		"filterByFormula"=>"AND({Status} = 'New')"
+);
+$contacts = $airtable->getContent("Deals",$params);
+print_r($contacts);
+
+// Add Donor
 $donor = array(
 	'Name' =>"John Brandon",
 	'Address' => "1234 Street Name, City, State, Zip, Country",
@@ -18,7 +26,7 @@ $donor = array(
 $new_donor = $airtable->saveContent("Contacts",$donor);
 
 echo 'New Donor ID: '.$new_donor->id;
-
+// Add Donation and Link to Donor
 if ($new_donor->id){
 
 	$donation = array(
