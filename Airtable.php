@@ -64,12 +64,12 @@ class Airtable
 
 		if (!empty($params)){
 			$params = http_build_query($params);
-			$request_url = $content_type."?".$params;
+			$request = $content_type."?".$params;
 		} else {
-			$request_url = $content_type;
+			$request = $content_type;
 		}
 
-		$curl = curl_init($this->getApiUrl($request_url));
+		$curl = curl_init($this->getApiUrl($request));
 
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
