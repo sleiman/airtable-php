@@ -3,10 +3,11 @@
    "license": "MIT",
    "autoload": {
      "psr-4" : {
-        "TANIOS\\Airtable\\" : ""
+        "TANIOS\\Airtable\\" : "src"
     }
    },
    "description": "A PHP wrapper for the Airtable API Edit",
+   "version": "2.0.0",
    "require": {
        "php": "^5.3.3 || ^7.1"
    }
