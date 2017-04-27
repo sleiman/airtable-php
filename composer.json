@@ -8,6 +8,6 @@
     "description": "A PHP wrapper for the Airtable API Edit",
     "require": {
         "php": "^5.3.3 || ^7.1",
-        "sleiman/airtable-php": "dev-master",
+        "sleiman/airtable-php": "dev-master"
     }
 }
