@@ -9,8 +9,8 @@ include('../src/Response.php');
 use TANIOS\Airtable\Airtable;
 
 $airtable = new Airtable(array(
-    'api_key'   => 'keyvgCwYISiqQHXPM',
-    'base'      => 'appS0I1y6AoS821iU',
+    'api_key'   => 'API_KEY',
+    'base'      => 'BASE_ID',
 ));
 
 $request = $airtable->getContent( 'Partenaires%20de%20salles' );
