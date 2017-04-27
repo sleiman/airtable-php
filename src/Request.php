@@ -37,7 +37,7 @@ class Request implements \ArrayAccess
      * @param Airtable $airtable Instance of Airtable
      * @param string $content_type Content type
      * @param array $data Request data
-     * @param bool $is_post Is it a POST request?
+     * @param bool|string $is_post Is it a POST request?
      */
     public function __construct( $airtable, $content_type, $data = [], $is_post = false )
     {
@@ -74,6 +74,10 @@ class Request implements \ArrayAccess
 
         if( $this->is_post )
         {
+            if( strtolower( $this->is_post ) == 'patch' )
+            {
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
+            }
             curl_setopt($curl,CURLOPT_POST, count($this->data));
             curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($this->data));
         }

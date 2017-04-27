@@ -75,7 +75,7 @@ class Airtable
 
 		$fields = array('fields'=>$fields);
 
-		$request = new Request( $this, $content_type, $fields, true );
+		$request = new Request( $this, $content_type, $fields, 'patch' );
 
 		return $request->getResponse();
 
