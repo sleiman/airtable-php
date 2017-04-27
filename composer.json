@@ -2,7 +2,7 @@
     "name": "sleiman/airtable-php",
     "autoload": {
        "psr-0" : {
-           "TANIOS\\AirTable\\AirTable" : "."
+           "TANIOS\\Airtable\\Airtable" : "."
        }
     },
     "description": "A PHP wrapper for the Airtable API Edit",
