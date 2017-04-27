@@ -2,9 +2,9 @@
    "name": "sleiman/airtable-php",
    "license": "MIT",
    "autoload": {
-      "psr-0" : {
-         "TANIOS\\Airtable\\Airtable\\" : ""
-     }
+     "psr-4" : {
+        "TANIOS\\Airtable\\" : ""
+    }
    },
    "description": "A PHP wrapper for the Airtable API Edit",
    "require": {
