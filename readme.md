@@ -17,21 +17,31 @@ The Base ID is a code that starts with 'app' followed by a mix of letter or numb
 
 ### Installation
 
+If you're using Composer, you can run the following command:
 ```
-include('Airtable.php');
+composer require sleiman/airtable-php
 ```
+You can also download them directly and extract them to your web directory.
 
-### Initialize the class
+
+### Add the wrapper to your project
+If you're using Composer, run the autoloader
+```php
+require 'vendor/autoload.php';
+```
+Or include the Airtable.php file
 
 ```php
+include('Airtable.php');
 use \TANIOS\Airtable\Airtable;
+```
+### Initialize the class
+```php
 $airtable = new Airtable(array(
 	'api_key'=> 'API_KEY',
 	'base'   => 'BASE_ID'
 ));
 ```
-
-
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
