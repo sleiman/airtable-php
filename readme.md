@@ -45,7 +45,12 @@ $airtable = new Airtable(array(
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
-$contacts = $airtable->getContent("Contacts");
+$request = $airtable->getContent( 'Contacts' );
+do {
+    $response = $request->getResponse();
+    var_dump( $response[ 'records' ] );
+}
+while( $request = $response->next() );
 print_r($contacts);
 ```
 ### Use params to filter, sort, etc
@@ -53,7 +58,7 @@ print_r($contacts);
 $params =  array(
 		"filterByFormula"=>"AND({Status} = 'New')"
 );
-$request = $airtable->getContent( 'Contacts' );
+$request = $airtable->getContent( 'Contacts', $params);
 do {
     $response = $request->getResponse();
     var_dump( $response[ 'records' ] );
