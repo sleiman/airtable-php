@@ -1,10 +1,13 @@
 <?php
 
-error_reporting( E_ALL );
+// If using Composer
+require 'vendor/autoload.php';
 
+/* if not using composer, uncomment this
 include('../src/Airtable.php');
 include('../src/Request.php');
 include('../src/Response.php');
+*/
 
 use TANIOS\Airtable\Airtable;
 
@@ -23,5 +26,3 @@ do {
 
 }
 while( $request = $response->next() );
-
-
