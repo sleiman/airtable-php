@@ -32,7 +32,9 @@ require 'vendor/autoload.php';
 Or include the Airtable.php file
 
 ```php
-include('Airtable.php');
+include('../src/Airtable.php');
+include('../src/Request.php');
+include('../src/Response.php');
 use \TANIOS\Airtable\Airtable;
 ```
 ### Initialize the class
