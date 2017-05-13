@@ -51,7 +51,7 @@ do {
     var_dump( $response[ 'records' ] );
 }
 while( $request = $response->next() );
-print_r($contacts);
+print_r($request);
 ```
 ### Use params to filter, sort, etc
 ```php
@@ -64,7 +64,7 @@ do {
     var_dump( $response[ 'records' ] );
 }
 while( $request = $response->next() );
-print_r($contacts);
+print_r($request);
 ```
 ### Create new entry
 We will create new entry in the table Contacts
