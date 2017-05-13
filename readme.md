@@ -53,7 +53,12 @@ print_r($contacts);
 $params =  array(
 		"filterByFormula"=>"AND({Status} = 'New')"
 );
-$contacts = $airtable->getContent("Contacts",$params);
+$request = $airtable->getContent( 'Contacts' );
+do {
+    $response = $request->getResponse();
+    var_dump( $response[ 'records' ] );
+}
+while( $request = $response->next() );
 print_r($contacts);
 ```
 ### Create new entry
