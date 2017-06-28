@@ -32,11 +32,13 @@ require 'vendor/autoload.php';
 Or include the Airtable.php file
 
 ```php
-include('Airtable.php');
-use \TANIOS\Airtable\Airtable;
+include('../src/Airtable.php');
+include('../src/Request.php');
+include('../src/Response.php');
 ```
 ### Initialize the class
 ```php
+use \TANIOS\Airtable\Airtable;
 $airtable = new Airtable(array(
 	'api_key'=> 'API_KEY',
 	'base'   => 'BASE_ID'
@@ -45,16 +47,26 @@ $airtable = new Airtable(array(
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
-$contacts = $airtable->getContent("Contacts");
-print_r($contacts);
+$request = $airtable->getContent( 'Contacts' );
+do {
+    $response = $request->getResponse();
+    var_dump( $response[ 'records' ] );
+}
+while( $request = $response->next() );
+print_r($request);
 ```
 ### Use params to filter, sort, etc
 ```php
 $params =  array(
 		"filterByFormula"=>"AND({Status} = 'New')"
 );
-$contacts = $airtable->getContent("Contacts",$params);
-print_r($contacts);
+$request = $airtable->getContent( 'Contacts', $params);
+do {
+    $response = $request->getResponse();
+    var_dump( $response[ 'records' ] );
+}
+while( $request = $response->next() );
+print_r($request);
 ```
 ### Create new entry
 We will create new entry in the table Contacts
