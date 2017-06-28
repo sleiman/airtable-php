@@ -6,9 +6,5 @@
         "TANIOS\\Airtable\\" : "src"
     }
    },
-   "description": "A PHP wrapper for the Airtable API Edit",
-   "version": "2.0.1",
-   "require": {
-       "php": "^5.3.3 || ^7.1"
-   }
+   "description": "A PHP wrapper for the Airtable API Edit"
 }
