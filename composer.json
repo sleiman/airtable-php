@@ -6,5 +6,7 @@
         "TANIOS\\Airtable\\": "src"
     }
    },
-   "description": "A PHP wrapper for the Airtable API"
+
+   "description": "A PHP wrapper for the Airtable API Edit"
+
 }
