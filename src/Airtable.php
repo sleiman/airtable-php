@@ -50,6 +50,7 @@ class Airtable
     }
 
     public function getApiUrl($request){
+	    $request = str_replace( ' ', '%20', $request );
     	$url = self::API_URL.$this->getBase().'/'.$request;
     	return $url;
     }
