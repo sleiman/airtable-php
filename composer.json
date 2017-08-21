@@ -8,7 +8,7 @@
    },
 
    "description": "A PHP wrapper for the Airtable API Edit",
-   "version": "2.2.4",
+   "version": "2.2.5",
    "require": {
        "php": ">=5.3.3"
    }
