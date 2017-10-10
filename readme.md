@@ -39,45 +39,38 @@ include('../src/Response.php');
 ### Initialize the class
 ```php
 use \TANIOS\Airtable\Airtable;
-$airtable = new Airtable(array(
-	'api_key'=> 'API_KEY',
-	'base'   => 'BASE_ID'
-));
+
+$airtable = new Airtable([
+   'api_key'=> 'API_KEY',
+   'base'   => 'BASE_ID'
+]);
 ```
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
-$request = $airtable->getContent( 'Contacts' );
-do {
-    $response = $request->getResponse();
-    var_dump( $response[ 'records' ] );
-}
-while( $request = $response->next() );
-print_r($request);
+$request  = $airtable->getContent('Contacts');
+$response = $request->getResponse();
+$data 	  = $response['records'];
 ```
 ### Use params to filter, sort, etc
 ```php
-$params =  array(
-		"filterByFormula"=>"AND({Status} = 'New')"
-);
-$request = $airtable->getContent( 'Contacts', $params);
-do {
-    $response = $request->getResponse();
-    var_dump( $response[ 'records' ] );
-}
-while( $request = $response->next() );
-print_r($request);
+$params =  [
+   "filterByFormula"=>"AND({Status} = 'New')"
+];
+$request  = $airtable->getContent('Contacts', $params);
+$response = $request->getResponse();
+$data 	  = $response['records'];
 ```
 ### Create new entry
 We will create new entry in the table Contacts
 ```php
 // Create an array with all the fields you want 
-$new_contact_details = array(
-	'Name' =>"Contact Name",
-	'Address' => "1234 Street Name, City, State, Zip, Country",
-	'Telephone #' => '123-532-1239',
-	'Email' =>'email@domain.com',
-);
+$new_contact_details = [
+   'Name' =>"Contact Name",
+   'Address' => "1234 Street Name, City, State, Zip, Country",
+   'Telephone #' => '123-532-1239',
+   'Email' =>'email@domain.com',
+];
 // Save to Airtable
 $new_contact = $airtable->saveContent("Contacts",$new_contact_details);
 // The ID of the new entry
@@ -89,10 +82,10 @@ print_r($new_contact);
 ### Update Contact
 Use the entry ID to update the entry
 ```php
-$update_contact_details = array(
-	'Telephone #' => '514-123-2942',
-);
-$update_contact = $airtable->updateContent("Contacts/{entry-id}",$fields);
+$update_contact_details = [
+    'Telephone #' => '514-123-2942',
+];
+$update_contact = $airtable->updateContent("Contacts/{entry-id}", $fields);
 print_r($update_contact);
 ```
 
