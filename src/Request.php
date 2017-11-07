@@ -78,6 +78,10 @@ class Request implements \ArrayAccess
             {
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
             }
+            else if( strtolower( $this->is_post ) == 'delete' )
+            {
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            }
             curl_setopt($curl,CURLOPT_POST, count($this->data));
             curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($this->data));
         }
