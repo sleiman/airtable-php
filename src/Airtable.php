@@ -82,4 +82,13 @@ class Airtable
 
 	}
 
+	function deleteContent($content_type)
+    {
+
+        $request = new Request( $this, $content_type, [], 'delete' );
+
+        return $request->getResponse();
+
+    }
+
 }
