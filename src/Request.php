@@ -33,19 +33,25 @@ class Request implements \ArrayAccess
     private $is_post = false;
 
     /**
+     * @var array|boolean Relations to lazy load
+     */
+    private $relations;
+
+    /**
      * Create a Request to AirTable API
      * @param Airtable $airtable Instance of Airtable
      * @param string $content_type Content type
      * @param array $data Request data
      * @param bool|string $is_post Is it a POST request?
      */
-    public function __construct( $airtable, $content_type, $data = [], $is_post = false )
+    public function __construct( $airtable, $content_type, $data = [], $is_post = false, $relations = false )
     {
 
         $this->airtable = $airtable;
         $this->content_type = $content_type;
         $this->data = $data;
         $this->is_post = $is_post;
+        $this->relations = $relations;
 
     }
 
@@ -100,7 +106,7 @@ class Request implements \ArrayAccess
 
         $response_string = curl_exec( $this->curl );
 
-        return new Response( $this->airtable, $this, $response_string );
+        return new Response( $this->airtable, $this, $response_string, $this->relations );
 
     }
 
@@ -143,4 +149,5 @@ class Request implements \ArrayAccess
             unset( $this->data[ $offset ] );
         }
     }
+
 }

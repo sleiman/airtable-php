@@ -55,9 +55,9 @@ class Airtable
     	return $url;
     }
 
-    function getContent($content_type,$params="") 
+    function getContent($content_type,$params="",$relations=false)
     {
-        return new Request( $this, $content_type, $params, false );
+        return new Request( $this, $content_type, $params, false, $relations );
 	}
 
 	function saveContent($content_type,$fields)

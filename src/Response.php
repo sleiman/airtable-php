@@ -38,7 +38,7 @@ class Response implements \ArrayAccess
      * @param Request $request Instance of Request
      * @param string $content Content string
      */
-    public function __construct( $airtable, $request, $content )
+    public function __construct( $airtable, $request, $content, $relations = false )
     {
 
         $this->airtable = $airtable;
@@ -55,6 +55,124 @@ class Response implements \ArrayAccess
         {
             $this->parsedContent = false;
         }
+
+        if( is_array( $relations ) && count( $relations ) > 0 )
+        {
+
+            if( array_keys( $relations ) !== range( 0, count( $relations ) - 1 ) )
+            {
+                foreach ( $relations as $related_field => $related_table )
+                {
+                    $this->processRelatedField( $related_field, $related_table );
+                }
+            }
+            else
+            {
+                foreach ( $relations as $related_field )
+                {
+                    $this->processRelatedField( $related_field );
+                }
+            }
+
+        }
+
+    }
+
+    private function processRelatedField( $related_field, $related_table = false )
+    {
+
+        if( isset( $this->parsedContent->records ) && is_array( $this->parsedContent->records ) && count( $this->parsedContent->records ) > 0 )
+        {
+            foreach ( $this->parsedContent->records as $record_key => $record )
+            {
+                $this->parsedContent->records[ $record_key ] = $this->loadRelatedField( $related_field, $related_table, $record );
+            }
+        }
+        else
+        {
+            $this->parsedContent = $this->loadRelatedField( $related_field, $related_table, $this->parsedContent );
+        }
+
+    }
+
+    private function loadRelatedField( $related_field, $related_table, $record )
+    {
+
+
+        if( ! isset( $record->fields ) || ! isset( $record->fields->$related_field ) )
+        {
+            return $record;
+        }
+
+        if( empty( $related_table ) )
+        {
+            $related_table = $related_field;
+        }
+
+        $relation_ids = $record->fields->$related_field;
+
+        if( ! is_array( $relation_ids ) )
+        {
+            $relation_ids = [ $relation_ids ];
+        }
+
+        $relation_formula = "OR(";
+        $relation_formula .= implode( ', ', array_map( function( $id ) { return "RECORD_ID() = '$id'"; }, $relation_ids ) );
+        $relation_formula .= ")";
+
+        if( ! is_array( $related_table ) )
+        {
+            $relation_request = $this->airtable->getContent( "$related_table", [
+                'filterByFormula'       => $relation_formula
+            ] );
+        }
+        else
+        {
+            $related_table_relations = isset( $related_table[ 'relations' ] ) && is_array( $related_table[ 'relations' ] )
+                ? $related_table[ 'relations' ]
+                : false;
+
+            $related_table_name = ! empty( $related_table[ 'table' ] ) ? $related_table[ 'table' ] : $related_field;
+
+            $relation_request = $this->airtable->getContent( "$related_table_name", [
+                'filterByFormula'       => $relation_formula
+            ], $related_table_relations );
+        }
+
+
+        $related_records = [];
+
+        do
+        {
+            $relation_response = $relation_request->getResponse();
+
+            if( ! is_array( $relation_response->records ) || count( $relation_response->records ) < 0 )
+            {
+                break;
+            }
+
+            foreach ( $relation_response->records as $related_record )
+            {
+                $formatted_record = $related_record->fields;
+                $formatted_record->id = $related_record->id;
+
+                $related_records[] = $formatted_record;
+            }
+        }
+        while( $relation_request = $relation_response->next() );
+
+        if( is_array( $record->fields->$related_field ) )
+        {
+            $record->fields->$related_field = $related_records;
+        }
+        else
+        {
+            $record->fields->$related_field = count( $related_records ) > 0
+                ? $related_records[ 0 ]
+                : null;
+        }
+
+        return $record;
 
     }
 
