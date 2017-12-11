@@ -133,4 +133,4 @@ $expend_expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, 
 
 ## Credits
 
-Copyright (c) 2017 - Programmed by Sleiman Tanios
+Copyright (c) 2017 - Programmed by Sleiman Tanios & Guillaume Laliberté
