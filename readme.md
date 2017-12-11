@@ -92,10 +92,10 @@ Use the entry ID to update the entry
 $update_contact_details = array(
 	'Telephone #' => '514-123-2942',
 );
-$update_contact = $airtable->updateContent("Contacts/{entry-id}",$fields);
+$update_contact = $airtable->updateContent("Contacts/{entry-id}",$update_contact_details);
 print_r($update_contact);
 ```
-### Expended Relationships 
+### Expended Relationships (eager loading)
 The response will include all the information of record linked to from another table.
 In this example, with a single call the "Customer Details" stored in a different table will be included in the response for the "Customer"
 ```
