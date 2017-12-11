@@ -95,7 +95,7 @@ $update_contact_details = array(
 $update_contact = $airtable->updateContent("Contacts/{entry-id}",$fields);
 print_r($update_contact);
 ```
-### Relations Expended
+### Expended Relationships 
 The response will include all the information of record linked to from another table.
 In this example, with a single call the "Customer Details" stored in a different table will be included in the response for the "Customer"
 ```
