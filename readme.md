@@ -95,6 +95,41 @@ $update_contact_details = array(
 $update_contact = $airtable->updateContent("Contacts/{entry-id}",$fields);
 print_r($update_contact);
 ```
+### Relations Expended
+The response will include all the information of record linked to from another table.
+In this example, with a single call the "Customer Details" stored in a different table will be included in the response for the "Customer"
+```
+$expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
+    'Customer Details'
+] );
+```
+
+You can decide to set a different name in your response than the one you have in Airtable. 
+```
+$expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
+    'The Response Name' 	=> 'The Table Name In Airtable',
+    'CustomerMeetings'  		=> 'Meetings'
+] );
+```
+We heard you like to expend your relationships, so now you can expend your expended relationships.
+The following is possible.
+```
+$expend_expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
+    'Customer Details',
+    'Meetings'      => [
+        'table'     => 'Meetings',
+        'relations' => [
+            'Calendar'  => 'Calendar',
+            'Door'      => [
+                'table'         => 'Doors',
+                'relations'     => [
+                    'Added By'  => 'Employees'
+                ]
+            ]
+        ]
+    ]
+] );
+```
 
 ## Credits
 
