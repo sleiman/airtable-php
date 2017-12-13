@@ -40,32 +40,37 @@ include('../src/Response.php');
 ```php
 use \TANIOS\Airtable\Airtable;
 $airtable = new Airtable(array(
-	'api_key'=> 'API_KEY',
-	'base'   => 'BASE_ID'
+    'api_key' => 'API_KEY',
+    'base'    => 'BASE_ID'
 ));
 ```
 ### Get all entries in table
 We are getting all the entries from the table "Contacts". 
 ```php
 $request = $airtable->getContent( 'Contacts' );
+
 do {
     $response = $request->getResponse();
     var_dump( $response[ 'records' ] );
 }
 while( $request = $response->next() );
+
 print_r($request);
 ```
 ### Use params to filter, sort, etc
 ```php
-$params =  array(
-		"filterByFormula"=>"AND({Status} = 'New')"
+$params = array(
+    "filterByFormula" => "AND( Status = 'New' )"
 );
+
 $request = $airtable->getContent( 'Contacts', $params);
+
 do {
     $response = $request->getResponse();
     var_dump( $response[ 'records' ] );
 }
 while( $request = $response->next() );
+
 print_r($request);
 ```
 ### Create new entry
@@ -73,13 +78,15 @@ We will create new entry in the table Contacts
 ```php
 // Create an array with all the fields you want 
 $new_contact_details = array(
-	'Name' =>"Contact Name",
-	'Address' => "1234 Street Name, City, State, Zip, Country",
-	'Telephone #' => '123-532-1239',
-	'Email' =>'email@domain.com',
+    'Name'        =>"Contact Name",
+    'Address'     => "1234 Street Name, City, State, Zip, Country",
+    'Telephone #' => '123-532-1239',
+    'Email'       =>'email@domain.com',
 );
+
 // Save to Airtable
-$new_contact = $airtable->saveContent("Contacts",$new_contact_details);
+$new_contact = $airtable->saveContent( "Contacts", $new_contact_details );
+
 // The ID of the new entry
 echo $new_contact->id;
 
@@ -97,23 +104,26 @@ print_r($update_contact);
 ```
 ### Expended Relationships (eager loading)
 The response will include all the information of record linked to from another table.
-In this example, with a single call the "Customer Details" stored in a different table will be included in the response for the "Customer"
-```
+In this example, with a single call, the field "Customer Details" will be filled with relations of "Customer Details" table.
+
+When you don't pass an associative array, we assume that the field and the table name are the same.
+```php
 $expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
     'Customer Details'
 ] );
 ```
 
-You can decide to set a different name in your response than the one you have in Airtable. 
-```
+If for some reasons the name of the field differs from the name of the table, you can pass an associative array instead.
+```php
 $expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
-    'The Response Name' 	=> 'The Table Name In Airtable',
-    'CustomerMeetings'  		=> 'Meetings'
+    'Field Name' 	        => 'Table Name',
+    'Customer Meetings'  => 'Meetings'
 ] );
 ```
+
 We heard you like to expend your relationships, so now you can expend your expended relationships.
 The following is possible.
-```
+```php
 $expend_expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, [
     'Customer Details',
     'Meetings'      => [
@@ -130,6 +140,8 @@ $expend_expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, 
     ]
 ] );
 ```
+
+But be aware that loading too many relationships can increase the response time considerably.
 
 ## Credits
 
