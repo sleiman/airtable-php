@@ -145,4 +145,4 @@ But be aware that loading too many relationships can increase the response time 
 
 ## Credits
 
-Copyright (c) 2017 - Programmed by Sleiman Tanios & Guillaume Laliberté
+Copyright (c) 2018 - Programmed by Sleiman Tanios & Guillaume Laliberté
