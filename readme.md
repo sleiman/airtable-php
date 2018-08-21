@@ -1,5 +1,5 @@
-# Airtable PHP Wrapper
-A PHP wrapper for the Airtable API. Feedback or bug reports are appreciated.
+# Airtable PHP client
+A PHP client for the Airtable API. Feedback or bug reports are appreciated.
 
 
 ## Get started
