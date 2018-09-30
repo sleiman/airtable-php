@@ -9,7 +9,7 @@ Please note that Airtable doesn't allow schema manipulation using their public A
 Once you created your base in the Airtable Interface open the API Docs to get your Base ID.
 
 
-<img src="example/img/api-doc-b.png" alt="API Doc Airtable"  width="350">
+<img src="example/img/api-doc-b.png" alt="API Doc Airtable"  width="200">
 
 The Base ID is a code that starts with 'app' followed by a mix of letter or numbers (appsvqGDFCwLC3I10).
 
@@ -142,6 +142,12 @@ $expend_expended = $airtable->getContent( "Customers/recpJGOaJYB4G36PU", false, 
 ```
 
 But be aware that loading too many relationships can increase the response time considerably.
+
+### Delete entry
+Use the entry ID to delete the entry
+```php
+$delete_contact = $airtable->deleteContent("Contacts/{entry-id}");
+```
 
 ## Credits
 
