@@ -91,4 +91,29 @@ class Airtable
 
     }
 
+    function deleteContent($content_type)
+    {
+
+        $request = new Request( $this, $content_type, [], 'delete' );
+
+        return $request->getResponse();
+
+    }
+    
+    function countRecords($content_type,$field="",$value="",$relations=false)
+    {
+        $params = "";
+        if (!empty($field)&& !empty($value)){
+            
+            $params = array(
+                "filterByFormula" => "AND({{$field}} = '$value')",
+            );
+        }
+        
+         $request = new Request( $this, $content_type, $params, false, $relations );
+         $response = $request->getResponse();
+         $records = $response->records;
+         return count($records);
+    }
+
 }
