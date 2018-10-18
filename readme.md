@@ -149,6 +149,21 @@ Use the entry ID to delete the entry
 $delete_contact = $airtable->deleteContent("Contacts/{entry-id}");
 ```
 
+### Quick Check (new)
+Find a record or many with one line. It's useful when you want to know if a user is already registered or if the same SKU is used.
+The response will return "count" and "records".
+```php
+$check = $airtable->quickCheck("Contacts",$field,$value);
+
+$check = $airtable->quickCheck("Contacts","Email","jon@wordlco.com");
+if($check->count > 0){
+    // the value is already there
+    var_dump($check->records)
+} else {
+    // it's not there
+}
+```
+
 ## Credits
 
 Copyright (c) 2018 - Programmed by Sleiman Tanios & Guillaume Laliberté
