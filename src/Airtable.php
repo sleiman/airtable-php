@@ -90,19 +90,11 @@ class Airtable
         return $request->getResponse();
 
     }
-
-    function deleteContent($content_type)
-    {
-
-        $request = new Request( $this, $content_type, [], 'delete' );
-
-        return $request->getResponse();
-
-    }
     
-    function countRecords($content_type,$field="",$value="",$relations=false)
+    function quickCheck($content_type,$field="",$value="")
     {
         $params = "";
+
         if (!empty($field)&& !empty($value)){
             
             $params = array(
@@ -110,10 +102,16 @@ class Airtable
             );
         }
         
-         $request = new Request( $this, $content_type, $params, false, $relations );
-         $response = $request->getResponse();
-         $records = $response->records;
-         return count($records);
+        $request = new Request( $this, $content_type, $params, false );
+
+        $response = $request->getResponse();
+        
+     
+        $results['count'] = count($response->records);
+        $results['records'] = $response->records;
+        
+     
+        return (object)$results;
     }
 
 }
