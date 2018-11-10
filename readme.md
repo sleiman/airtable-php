@@ -158,7 +158,7 @@ $check = $airtable->quickCheck("Contacts",$field,$value);
 $check = $airtable->quickCheck("Contacts","Email","jon@wordlco.com");
 if($check->count > 0){
     // the value is already there
-    var_dump($check->records)
+    var_dump($check->records);
 } else {
     // it's not there
 }
