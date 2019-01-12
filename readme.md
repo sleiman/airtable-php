@@ -1,5 +1,7 @@
 # Airtable PHP client
-A PHP client for the Airtable API. Feedback or bug reports are appreciated.
+A PHP client for the Airtable API. Comments, requests or bug reports are appreciated.
+
+[Examples](examples)
 
 
 ## Get started
