@@ -166,4 +166,4 @@ if($check->count > 0){
 
 ## Credits
 
-Copyright (c) 2018 - Programmed by Sleiman Tanios & Guillaume Laliberté
+Copyright (c) 2019 - Programmed by Sleiman Tanios & Guillaume Laliberté
