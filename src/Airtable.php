@@ -13,13 +13,14 @@ namespace TANIOS\Airtable;
 
 class Airtable 
 {
-	const API_URL = "https://api.airtable.com/v0/";
+	
+    const API_URL = "https://api.airtable.com/v0/";
 
 	private $_key;
 
     private $_base;
 
-     private $_slack;
+    private $_slack;
 	
 	public function __construct($config)
     {
