@@ -1,11 +1,11 @@
+> We are working on new features, help us decide what's next. 
+> [Give your opinion](https://ocb.one/2l2)
+
 # Airtable PHP client
 A PHP client for the Airtable API. 
 Comments, requests or bug reports are appreciated.
 
 [View examples](examples)
-
-> We are working on new features, help us decide what's next. 
-> [Give your opinion](https://ocb.one/2l2)
 
 ## Get started
 
