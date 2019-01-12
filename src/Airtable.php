@@ -16,7 +16,7 @@ class Airtable
 	
     const API_URL = "https://api.airtable.com/v0/";
 
-	private $_key;
+    private $_key;
 
     private $_base;
 
