@@ -1,5 +1,6 @@
 <? 
 
+// This is an example of the first version of Airtable, no longer applies with most recent update
 include('../Airtable.php');
 
 use TANIOS\Airtable\Airtable;

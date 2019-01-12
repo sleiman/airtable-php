@@ -1,5 +1,7 @@
 <?php
 
+// Simple example to setup and retrieve all data from a table 
+
 // If using Composer
 require 'vendor/autoload.php';
 
@@ -16,7 +18,7 @@ $airtable = new Airtable(array(
     'base'      => 'BASE_ID',
 ));
 
-$request = $airtable->getContent( 'Partenaires%20de%20salles' );
+$request = $airtable->getContent( 'Table Name' );
 
 do {
 
