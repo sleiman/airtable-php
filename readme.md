@@ -64,8 +64,13 @@ print_r($request);
 ```
 ### Use params to filter, sort, etc
 ```php
+// You don't have to use all the params, they are added as a reference
 $params = array(
-    "filterByFormula" => "AND( Status = 'New' )"
+    "filterByFormula" => "AND( Status = 'New' )",
+    "sort" => array(array('field' => 'Count', 'direction' => "desc")),
+    "maxRecords" => 175,
+    "pageSize" => 50,
+    "view" => "Name of your View"
 );
 
 $request = $airtable->getContent( 'Contacts', $params);
