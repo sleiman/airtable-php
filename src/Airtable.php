@@ -27,7 +27,9 @@ class Airtable
         if (is_array($config)) {
             $this->setKey($config['api_key']);
             $this->setBase($config['base']);
-            $this->setSlack($config['slack_webhook']);
+            if(isset($config['slack_webhook'])){
+                $this->setSlack($config['slack_webhook']);
+            }
         } else {
             echo 'Error: __construct() - Configuration data is missing.';
         }
