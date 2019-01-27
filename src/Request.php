@@ -107,47 +107,9 @@ class Request implements \ArrayAccess
         $response_string = curl_exec( $this->curl );
 
         $response = new Response( $this->airtable, $this, $response_string, $this->relations );
-
-        if ($response['error'] && $this->airtable->getSlack()){
-            
-            $data['base'] = $this->airtable->getBase();
-            $data['table'] = $this->content_type;
-            $data['error'] = $response['error'];
-            $data = json_encode($data);
-            $this->postSlack($data);
-            
-        }
             
         return $response;
                
-    }
-
-
-    public function postSlack($text) {
-        
-        $url = $this->airtable->getSlack();
-        
-        $text = "```".$text."```";
-
-        $data_string = array(
-                "text"  =>  $text,
-            );
-
-        $data_string = json_encode($data_string);
-        
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-            'Content-Type: application/json',                                                                                
-            'Content-Length: ' . strlen($data_string))                                                                       
-        );         
-        $result = curl_exec($ch);
-        curl_close($ch);
-        
-
-    
     }
 
     public function __set( $key, $value )

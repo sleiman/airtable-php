@@ -19,17 +19,12 @@ class Airtable
     private $_key;
 
     private $_base;
-
-    private $_slack;
 	
 	public function __construct($config)
     {
         if (is_array($config)) {
             $this->setKey($config['api_key']);
             $this->setBase($config['base']);
-            if(isset($config['slack_webhook'])){
-                $this->setSlack($config['slack_webhook']);
-            }
         } else {
             echo 'Error: __construct() - Configuration data is missing.';
         }
@@ -53,16 +48,6 @@ class Airtable
     public function getBase()
     {
         return $this->_base;
-    }
-
-    public function setSlack($slack)
-    {
-        $this->_slack = $slack;
-    }
-
-    public function getSlack()
-    {
-        return $this->_slack;
     }
 
     public function getApiUrl($request){
