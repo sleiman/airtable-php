@@ -58,7 +58,10 @@ class Airtable
 
     function getContent($content_type,$params="",$relations=false)
     {
-        return new Request( $this, $content_type, $params, false, $relations );
+
+        $request = new Request( $this, $content_type, $params, false, $relations );
+
+        return $request->getResponse();
 	}
 
 	function saveContent($content_type,$fields)
