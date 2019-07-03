@@ -45,8 +45,9 @@ include('../src/Response.php');
 ```php
 use \TANIOS\Airtable\Airtable;
 $airtable = new Airtable(array(
-    'api_key' => 'API_KEY',
-    'base'    => 'BASE_ID'
+    'api_key'  => 'API_KEY',
+    'base'     => 'BASE_ID',
+    'throttle' => true // if you wish to throttle requests to Airtable's 5/sec limit
 ));
 ```
 ### Get all entries in table

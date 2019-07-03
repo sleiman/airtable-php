@@ -8,6 +8,8 @@
 
 namespace TANIOS\Airtable;
 
+use Stiphle\Throttle;
+
 class Request implements \ArrayAccess
 {
 
@@ -104,7 +106,16 @@ class Request implements \ArrayAccess
 
         $this->init();
 
-        $response_string = curl_exec( $this->curl );
+        do {
+            usleep($this->getRateLimitWaitTime() * 1000);
+
+            $response_string = curl_exec( $this->curl );
+
+            $code = curl_getinfo( $this->curl, CURLINFO_HTTP_CODE );
+
+        } while ( $code == 429 );
+
+
 
         $response = new Response( $this->airtable, $this, $response_string, $this->relations );
             
@@ -150,6 +161,19 @@ class Request implements \ArrayAccess
         {
             unset( $this->data[ $offset ] );
         }
+    }
+
+    private function getRateLimitWaitTime()
+    {
+        if ($this->airtable->getThrottler() == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return $this->airtable->getThrottler()->throttle('airtable', 5, 1000);
+        }
+
     }
 
 }
