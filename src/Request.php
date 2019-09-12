@@ -65,21 +65,29 @@ class Request implements \ArrayAccess
 
         $request = $this->content_type;
 
-        if( ! $this->is_post )
+        $url_encoded = false;
+
+        if( ! $this->is_post || strtolower( $this->is_post ) === 'delete' )
         {
             if (!empty($this->data)){
                 $data = http_build_query($this->data);
                 $request .= "?" . $data;
             }
+
+            $url_encoded = true;
         }
 
         $curl = curl_init($this->airtable->getApiUrl($request));
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         if( $this->is_post )
         {
+
+            $url_encoded = false;
+
             if( strtolower( $this->is_post ) == 'patch' )
             {
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
@@ -87,9 +95,16 @@ class Request implements \ArrayAccess
             else if( strtolower( $this->is_post ) == 'delete' )
             {
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
+                $url_encoded = true;
             }
-            curl_setopt($curl,CURLOPT_POST, count($this->data));
-            curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($this->data));
+
+            curl_setopt($curl,CURLOPT_POST, true);
+
+            if( ! $url_encoded )
+            {
+                curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($this->data));
+            }
         }
 
         $this->curl = $curl;

@@ -64,7 +64,14 @@ class Airtable
 	function saveContent($content_type,$fields)
 	{
 
-		$fields = array('fields'=>$fields);
+	    if( ! $this->_detectBatch( $fields ) )
+        {
+            $fields = array('fields' => $fields);
+        }
+	    else
+        {
+            $fields = array('records' => $fields);
+        }
 
 		$request = new Request( $this, $content_type, $fields, true );
 
@@ -75,7 +82,14 @@ class Airtable
 	function updateContent($content_type,$fields)
 	{
 
-		$fields = array('fields'=>$fields);
+        if( ! $this->_detectBatch( $fields ) )
+        {
+            $fields = array('fields' => $fields);
+        }
+        else
+        {
+            $fields = array('records' => $fields);
+        }
 
 		$request = new Request( $this, $content_type, $fields, 'patch' );
 
@@ -83,10 +97,21 @@ class Airtable
 
 	}
 
-	function deleteContent($content_type)
+	function deleteContent($content_type, $records = null)
     {
 
-        $request = new Request( $this, $content_type, [], 'delete' );
+        if( isset( $records ) && is_array( $records ) )
+        {
+            $fields = [
+                'records'       => $records
+            ];
+        }
+        else
+        {
+            $fields = [];
+        }
+
+        $request = new Request( $this, $content_type, $fields, 'delete' );
 
         return $request->getResponse();
 
@@ -113,6 +138,29 @@ class Airtable
         
      
         return (object)$results;
+    }
+    
+    private function _detectBatch( $input )
+    {
+
+        if( is_array( $input ) )
+        {
+            $is_batch = false;
+
+            foreach ( $input as $input_element )
+            {
+                if( is_array( $input_element ) && isset( $input_element[ 'fields' ] ) && is_array( $input_element[ 'fields' ] ) )
+                {
+                    $is_batch = true;
+                    break;
+                }
+            }
+
+            return $is_batch;
+        }
+
+        return false;
+
     }
 
 }
