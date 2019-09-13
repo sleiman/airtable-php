@@ -102,6 +102,7 @@ echo $new_contact->id;
 
 print_r($new_contact);
 ```
+*Batch Create now available, documentation available below*
 
 ### Update Contact
 Use the entry ID to update the entry
@@ -112,6 +113,8 @@ $update_contact_details = array(
 $update_contact = $airtable->updateContent("Contacts/{entry-id}",$update_contact_details);
 print_r($update_contact);
 ```
+*Batch Update now available, documentation available below*
+
 ### Expended Relationships (eager loading)
 The response will include all the information of record linked to from another table.
 In this example, with a single call, the field "Customer Details" will be filled with relations of "Customer Details" table.
@@ -158,6 +161,7 @@ Use the entry ID to delete the entry
 ```php
 $delete_contact = $airtable->deleteContent("Contacts/{entry-id}");
 ```
+*Batch Delete now available, documentation available below*
 
 ### Quick Check (new)
 Find a record or many with one line. It's useful when you want to know if a user is already registered or if the same SKU is used.
@@ -172,6 +176,54 @@ if($check->count > 0){
 } else {
     // it's not there
 }
+```
+
+### Batch Create, Update, Delete
+Airtable API now allows to create, update, and delete 10 records per API request.
+
+Create
+```php
+$content = $a->saveContent( 'Links', [
+    [
+        'fields'            => [
+            'Name'          => 'Tasty'
+        ]
+    ],
+    [
+        'fields'            => [
+            'Name'          => 'Yolo'
+        ]
+    ]
+] );
+```
+
+Update
+```php
+$update = [];
+
+foreach ( $content->records as $record )
+{
+    $update[] = [
+        'id'            => $record->id,
+        'fields'        => [
+            'Slug'      => strtolower( $record->fields->Name )
+        ]
+    ];
+}
+
+$response = $a->updateContent( 'Links', $update );
+```
+
+Delete
+```php
+$delete = [];
+
+foreach ( $response->records as $record )
+{
+    $delete[] = $record->id;
+}
+
+$response = $a->deleteContent( 'Links', $delete );
 ```
 
 ## Credits
