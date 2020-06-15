@@ -10,6 +10,8 @@ namespace TANIOS\Airtable;
  * @version 1.0
  */
 
+use Stiphle\Throttle;
+
 
 class Airtable 
 {
@@ -19,12 +21,30 @@ class Airtable
     private $_key;
 
     private $_base;
+
+    /**
+     * @var Throttle\LeakyBucket
+     */
+    private $_throttle;
 	
 	public function __construct($config)
     {
+
         if (is_array($config)) {
+
+            $config = array_merge( [
+
+                'throttle'          => true,
+
+            ], $config );
+
             $this->setKey($config['api_key']);
             $this->setBase($config['base']);
+
+            if( ! empty( $config[ 'throttle' ] ) ) {
+
+                $this->_throttle = new Throttle\LeakyBucket();
+            }
         } else {
             echo 'Error: __construct() - Configuration data is missing.';
         }
@@ -161,6 +181,15 @@ class Airtable
 
         return false;
 
+    }
+
+    /**
+     * @return Throttle\LeakyBucket
+     */
+    public function getThrottler()
+    {
+
+        return $this->_throttle;
     }
 
 }

@@ -119,6 +119,8 @@ class Request implements \ArrayAccess
 
         $this->init();
 
+        usleep( $this->getRateLimitWaitTime() * 1000 );
+
         $response_string = curl_exec( $this->curl );
 
         $response = new Response( $this->airtable, $this, $response_string, $this->relations );
@@ -165,6 +167,18 @@ class Request implements \ArrayAccess
         {
             unset( $this->data[ $offset ] );
         }
+    }
+
+    private function getRateLimitWaitTime()
+    {
+
+        if( ( $throttler = $this->airtable->getThrottler() ) == null ) {
+
+            return 0;
+        }
+
+        return $throttler->throttle( 'airtable', 5, 1000 );
+
     }
 
 }

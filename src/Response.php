@@ -184,16 +184,14 @@ class Response implements \ArrayAccess
             return false;
         }
 
-
-        if( ! isset( $this[ 'offset' ] ) )
+        if( empty( $this[ 'offset' ] ) )
         {
             return false;
         }
 
-        $this->request->offset = $this[ 'offset' ];
+        $this->request[ 'offset' ] = $this[ 'offset' ];
 
         return $this->request;
-
     }
 
     public function __get( $key )
