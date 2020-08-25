@@ -63,7 +63,7 @@ class Request implements \ArrayAccess
             sprintf('Authorization: Bearer %s', $this->airtable->getKey())
         );
 
-        $request = $this->content_type;
+        $request = rawurlencode( $this->content_type );
 
         $url_encoded = false;
 
