@@ -153,7 +153,7 @@ class Airtable
         $response = $request->getResponse();
         
      
-        $results['count'] = count($response->records);
+        $results['count'] = isset( $response->records ) ? count($response->records) : 0;
         $results['records'] = $response->records;
         
      
