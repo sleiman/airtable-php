@@ -142,9 +142,9 @@ class Airtable
         $params = "";
 
         if (!empty($field)&& !empty($value)){
-            
+
             $params = array(
-                "filterByFormula" => "AND({{$field}} = '$value')",
+                "filterByFormula" => 'AND({' . $field . '} = "' . $value .'")',
             );
         }
         
