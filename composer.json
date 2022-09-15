@@ -1,5 +1,5 @@
 {
-   "name": "sleiman/airtable-php",
+   "name": "bizly/airtable-php",
    "license": "MIT",
    "autoload": {
      "psr-4": {
@@ -8,7 +8,7 @@
    },
 
    "description": "A PHP wrapper for the Airtable API",
-   "version": "2.4.6",
+   "version": "2.4.7",
    "require": {
        "php": ">=5.4",
       "davedevelopment/stiphle": "^0.9.2"
