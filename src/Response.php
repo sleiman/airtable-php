@@ -9,28 +9,30 @@
 namespace TANIOS\Airtable;
 
 
+use ReturnTypeWillChange;
+
 class Response implements \ArrayAccess
 {
 
     /**
      * @var Airtable Instance of Airtable
      */
-    private $airtable;
+    private Airtable $airtable;
 
     /**
      * @var Request Instance or Request
      */
-    private $request;
+    private Request $request;
 
     /**
      * @var string Response content
      */
-    private $content = "";
+    private string $content = "";
 
     /**
      * @var bool|\stdClass Response
      */
-    private $parsedContent = false;
+    private mixed $parsedContent = false;
 
     /**
      * Response constructor.
@@ -38,7 +40,7 @@ class Response implements \ArrayAccess
      * @param Request $request Instance of Request
      * @param string $content Content string
      */
-    public function __construct( $airtable, $request, $content, $relations = false )
+    public function __construct( Airtable $airtable, Request $request, string $content, $relations = false )
     {
 
         $this->airtable = $airtable;
@@ -176,7 +178,7 @@ class Response implements \ArrayAccess
 
     }
 
-    public function next()
+    public function next(): bool|Request
     {
 
         if( ! $this->parsedContent )
@@ -214,19 +216,19 @@ class Response implements \ArrayAccess
         return $this->parsedContent && isset( $this->parsedContent->$key );
     }
 
-    public function offsetExists($offset)
+    #[ReturnTypeWillChange] public function offsetExists( $offset): bool
     {
         return $this->parsedContent && isset( $this->parsedContent->$offset );
     }
 
-    public function offsetGet($offset)
+    #[ReturnTypeWillChange] public function offsetGet( $offset)
     {
         return $this->parsedContent && isset( $this->parsedContent->$offset )
                 ? $this->parsedContent->$offset
                 : null;
     }
 
-    public function offsetSet($offset, $value)
+    #[ReturnTypeWillChange] public function offsetSet( $offset, $value)
     {
         if( $this->parsedContent )
         {
@@ -234,7 +236,7 @@ class Response implements \ArrayAccess
         }
     }
 
-    public function offsetUnset($offset)
+    #[ReturnTypeWillChange] public function offsetUnset( $offset)
     {
         if( $this->parsedContent && isset( $this->parsedContent->$offset ) )
         {

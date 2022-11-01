@@ -50,7 +50,7 @@ class Airtable
         }
     }
 
-    public function setKey($key)
+    public function setKey($key): void
     {
         $this->_key = $key;
     }
@@ -60,7 +60,7 @@ class Airtable
         return $this->_key;
     }
 
-    public function setBase($base)
+    public function setBase($base): void
     {
         $this->_base = $base;
     }
@@ -70,27 +70,28 @@ class Airtable
         return $this->_base;
     }
 
-    public function getApiUrl($request){
+    public function getApiUrl($request): string
+    {
 	    $request = str_replace( ' ', '%20', $request );
     	$url = self::API_URL.$this->getBase().'/'.$request;
     	return $url;
     }
 
-    function getContent($content_type,$params="",$relations=false)
+    function getContent($content_type,$params=[],$relations=false): Request
     {
         return new Request( $this, $content_type, $params, false, $relations );
 	}
 
-	function saveContent($content_type, $fields, $typecast = false)
-	{
+	function saveContent($content_type, $fields, $typecast = false): Response
+    {
 
 	    if( ! $this->_detectBatch( $fields ) )
         {
-            $fields = array('fields' => $fields, 'typecast' => $typecast);
+            $fields = [ 'fields' => $fields, 'typecast' => $typecast ];
         }
 	    else
         {
-            $fields = array('records' => $fields, 'typecast' => $typecast);
+            $fields = [ 'records' => $fields, 'typecast' => $typecast ];
         }
 
 		$request = new Request( $this, $content_type, $fields, true );
@@ -99,8 +100,8 @@ class Airtable
 
 	}
 
-	function updateContent($content_type, $fields, $typecast = false)
-	{
+	function updateContent($content_type, $fields, $typecast = false): Response
+    {
 
         if( ! $this->_detectBatch( $fields ) )
         {
@@ -117,7 +118,7 @@ class Airtable
 
 	}
 
-	function deleteContent($content_type, $records = null)
+	function deleteContent($content_type, $records = null): Response
     {
 
         if( isset( $records ) && is_array( $records ) )
@@ -137,7 +138,7 @@ class Airtable
 
     }
     
-    function quickCheck($content_type,$field="",$value="")
+    function quickCheck($content_type,$field="",$value=""): object
     {
         $params = "";
 
@@ -160,7 +161,7 @@ class Airtable
         return (object)$results;
     }
     
-    private function _detectBatch( $input )
+    private function _detectBatch( $input ): bool
     {
 
         if( is_array( $input ) )
@@ -186,7 +187,7 @@ class Airtable
     /**
      * @return Throttle\LeakyBucket
      */
-    public function getThrottler()
+    public function getThrottler(): Throttle\LeakyBucket
     {
 
         return $this->_throttle;

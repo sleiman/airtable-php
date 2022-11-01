@@ -8,13 +8,15 @@
 
 namespace TANIOS\Airtable;
 
+use ReturnTypeWillChange;
+
 class Request implements \ArrayAccess
 {
 
     /**
      * @var Airtable Instance of Airtable
      */
-    private $airtable;
+    private Airtable $airtable;
     /**
      * @var resource Instance of CURL
      */
@@ -22,20 +24,20 @@ class Request implements \ArrayAccess
     /**
      * @var string Content type
      */
-    private $content_type;
+    private string $content_type;
     /**
      * @var array Request data
      */
-    private $data = [];
+    private array $data = [];
     /**
      * @var bool Is it a POST request?
      */
-    private $is_post = false;
+    private string|bool $is_post = false;
 
     /**
      * @var array|boolean Relations to lazy load
      */
-    private $relations;
+    private mixed $relations;
 
     /**
      * Create a Request to AirTable API
@@ -44,7 +46,7 @@ class Request implements \ArrayAccess
      * @param array $data Request data
      * @param bool|string $is_post Is it a POST request?
      */
-    public function __construct( $airtable, $content_type, $data = [], $is_post = false, $relations = false )
+    public function __construct( Airtable $airtable, string $content_type, array $data = [], bool|string $is_post = false, $relations = false )
     {
 
         $this->airtable = $airtable;
@@ -120,7 +122,7 @@ class Request implements \ArrayAccess
     /**
      * @return Response Get response from API
      */
-    public function getResponse()
+    public function getResponse(): Response
     {
 
         $this->init();
@@ -145,19 +147,19 @@ class Request implements \ArrayAccess
         $this->data[ $key ] = $value;
     }
 
-    public function offsetExists($offset)
+    #[ReturnTypeWillChange] public function offsetExists( $offset): bool
     {
         return is_array( $this->data) && isset( $this->data[ $offset ] );
     }
 
-    public function offsetGet($offset)
+    #[ReturnTypeWillChange] public function offsetGet( $offset): mixed
     {
         return is_array( $this->data ) && isset( $this->data[ $offset ] )
             ? $this->data[ $offset ]
             : null;
     }
 
-    public function offsetSet($offset, $value)
+    #[ReturnTypeWillChange] public function offsetSet( $offset, $value)
     {
         if( ! is_array( $this->data ) )
         {
@@ -167,7 +169,7 @@ class Request implements \ArrayAccess
         $this->data[ $offset ] = $value;
     }
 
-    public function offsetUnset($offset)
+    #[ReturnTypeWillChange] public function offsetUnset( $offset)
     {
         if( is_array( $this->data ) && isset( $this->data[ $offset ] ) )
         {
@@ -175,7 +177,7 @@ class Request implements \ArrayAccess
         }
     }
 
-    private function getRateLimitWaitTime()
+    private function getRateLimitWaitTime(): int
     {
 
         if( ( $throttler = $this->airtable->getThrottler() ) == null ) {
