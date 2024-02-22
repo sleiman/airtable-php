@@ -161,6 +161,21 @@ class Response implements \ArrayAccess
         }
         while( $relation_request = $relation_response->next() );
 
+        // Keep order
+        if (count($relation_ids) > 1) {
+            $related_records_sorted = array();
+
+            foreach ($relation_ids as $relation_id) {
+                $key = array_search($relation_id, array_column($related_records, 'id'));
+
+                if ($key !== false) {
+                    $related_records_sorted[] = $related_records[$key];
+                }
+            }
+
+            $related_records = $related_records_sorted;
+        }
+
         if( is_array( $record->fields->$related_field ) )
         {
             $record->fields->$related_field = $related_records;
